@@ -43,4 +43,4 @@ function heapSort(array) {
     return array;
 }
 
-console.log(heapSort([66, 3, 72, 1, 99])); // output:[ 1, 3, 66, 72, 99 ]
+console.log(heapSort([66, 3, 72, 1, 99,99])); // output:[ 1, 3, 66, 72, 99 ]

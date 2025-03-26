@@ -26,7 +26,7 @@ class MaxHeap {
         this.heap.push(element);
         this.heapifyUp(this.heap.length - 1);
     }
-
+ 
     heapifyUp() {
         let index = this.heap.length - 1;
 

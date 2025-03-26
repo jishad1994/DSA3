@@ -96,34 +96,38 @@ class BinaryTree {
         return current.value;
     }
 
-    //remove node
+    // Delete a node
+    deleteNode(root, value) {
+        if (!root) return null;
 
-    delete(node, value) {
-        function removeNode(node, value) {
-            if (!node) return null;
-
-            if (value < node.value) {
-                node.left = removeNode(node.left, value);
-                return node;
-            } else if (value > node.value) {
-                node.right = removeNode(node.right, value);
-                return node;
-            } else {
-                //case :1 no children
-
-                if (!node.left && !node.right) return null;
-
-                //case:2 only one child
-                if (!node.left) return node.right;
-                if (!node.right) return node.left;
-
-                //case 3: two children,find the min in the right subtree;
-                node.value = this.findMin(node.right);
-                node.right = removeNode(node.right, node.value);
-                return node;
+        if (value < root.value) {
+            root.left = this.deleteNode(root.left, value); // Move left
+        } else if (value > root.value) {
+            root.right = this.deleteNode(root.right, value); // Move right
+        } else {
+            // Node found
+            // Case 1: No child
+            if (!root.left && !root.right) {
+                return null;
             }
+
+            // Case 2: One child
+            if (!root.left) return root.right;
+            if (!root.right) return root.left;
+
+            // Case 3: Two children
+            // Find the in-order successor (smallest value in the right subtree)
+            const minValue = this.findMin(root.right);
+            root.value = minValue;
+            root.right = this.deleteNode(root.right, minValue); // Delete successor
         }
-        this.root = removeNode(this.root, value);
+
+        return root;
+    }
+
+    // Public method to delete value
+    remove(value) {
+        this.root = this.deleteNode(this.root, value);
     }
 
     //inorder treversal(left,root ,right)
@@ -143,11 +147,11 @@ class BinaryTree {
         }
     }
 
-    postorder(node){
-        if(node){
-            this.postorder(node.left)
-            this.postorder(node.right)
-            console.log(node.value)
+    postorder(node) {
+        if (node) {
+            this.postorder(node.left);
+            this.postorder(node.right);
+            console.log(node.value);
         }
     }
 }
@@ -163,4 +167,4 @@ console.log(tree.contains(55));
 tree.inorder(tree.root);
 tree.postorder(tree.root);
 tree.preorder(tree.root);
-console.log(tree)
+console.log(tree);
